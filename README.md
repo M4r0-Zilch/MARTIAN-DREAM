@@ -48,15 +48,16 @@ additional download is needed to play once Ren'Py is installed.
 This project targets **Ren'Py 8.5.3**.
 
 1. Install the Ren'Py 8.5.3 SDK.
-2. Place the project folder inside the SDK's `RockPaperScissors` directory (or open it directly from the Ren'Py launcher).
+2. Clone or download this repository to any folder on your computer.
 3. Launch the project from the Ren'Py launcher, or run:
 
 ```sh
-# From the Ren'Py SDK root
-./renpy.sh "RockPaperScissors/MARTIAN DREAM V3"
+# Replace the path with the folder where you cloned this repository.
+./renpy.sh "/path/to/MARTIAN-DREAM"
 ```
 
-On Windows, run `renpy.exe` and select the project from the launcher.
+On Windows, open the Ren'Py launcher and select the cloned `MARTIAN-DREAM`
+project folder.
 
 ## Controls
 
@@ -100,11 +101,11 @@ Generated files (`saves/`, `cache/`, `*.rpyc`, logs, and translations for the de
 
 ## Development and verification
 
-From the Ren'Py SDK root:
+From the Ren'Py SDK folder, use the path to your cloned project:
 
 ```sh
-./renpy.sh "RockPaperScissors/MARTIAN DREAM V3" lint
-./renpy.sh "RockPaperScissors/MARTIAN DREAM V3" compile
+./renpy.sh "/path/to/MARTIAN-DREAM" lint
+./renpy.sh "/path/to/MARTIAN-DREAM" compile
 ```
 
 Current lint baseline:

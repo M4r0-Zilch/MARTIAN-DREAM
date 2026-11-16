@@ -24,7 +24,7 @@ artifacts staged).
 ## 2. Environment & commands
 
 - Ren'Py SDK root: the folder containing `renpy.sh` (Linux/macOS) or `renpy.exe` (Windows).
-- Project folder: `RockPaperScissors/MARTIAN DREAM V3` inside the SDK root, or wherever you opened the project from.
+- Project folder: any folder containing the cloned repository (with `project.json` and `game/`).
 - Ren'Py: `8.5.3.26051504`; virtual resolution **1280×720**.
 - Run everything from the SDK root:
 
@@ -32,13 +32,13 @@ artifacts staged).
 cd "/path/to/renpy-sdk"
 
 # Validate script (must print statistics and no errors)
-./renpy.sh "RockPaperScissors/MARTIAN DREAM V3" lint
+./renpy.sh "/path/to/MARTIAN-DREAM" lint
 
 # Compile .rpy -> .rpyc (no output means success)
-./renpy.sh "RockPaperScissors/MARTIAN DREAM V3" compile
+./renpy.sh "/path/to/MARTIAN-DREAM" compile
 
 # Play/test manually
-./renpy.sh "RockPaperScissors/MARTIAN DREAM V3"
+./renpy.sh "/path/to/MARTIAN-DREAM"
 ```
 
 Do not edit generated `*.rpyc`, `game/cache/`, `game/saves/`, or `game/tl/None/`.
@@ -162,7 +162,7 @@ copy:
 
 ```sh
 SDK="/path/to/renpy-sdk"
-SRC="$SDK/RockPaperScissors/MARTIAN DREAM V3"
+SRC="/path/to/MARTIAN-DREAM"
 T="${TMPDIR:-/tmp}/martian-dream-v3-test"
 
 rm -rf "$T" && mkdir -p "$T"

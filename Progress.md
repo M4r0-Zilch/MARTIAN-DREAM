@@ -13,8 +13,8 @@
 
 ```sh
 cd "/path/to/renpy-sdk"
-./renpy.sh "RockPaperScissors/MARTIAN DREAM V3" lint
-./renpy.sh "RockPaperScissors/MARTIAN DREAM V3" compile
+./renpy.sh "/path/to/MARTIAN-DREAM" lint
+./renpy.sh "/path/to/MARTIAN-DREAM" compile
 ```
 
 Expected lint statistics (stable baseline): **160 dialogue blocks, 2,255 words,
@@ -48,6 +48,9 @@ Arabic prototype.
 - [x] Expanded the README with a story and gameplay overview, audience and
       platform details, and credit for Team AG10S and the NASA Space Apps
       Challenge Alexandria Local Event.
+- [x] Made setup and development commands independent of the Ren'Py SDK's
+      installation folder so the repository can be cloned and launched from
+      any location.
 - [x] Fitted the Dictionary inside the 1280×720 screen: panel reduced from
       1180×780 to 1120×660, viewport to 1040×430, and paddings/spacing tightened.
 - [x] Switched the Dictionary to English reading order: term on the left,
