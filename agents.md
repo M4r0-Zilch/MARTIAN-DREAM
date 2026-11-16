@@ -23,13 +23,13 @@ artifacts staged).
 
 ## 2. Environment & commands
 
-- Ren'Py SDK root: `/mnt/Y-Disk/Ren'Py/renpy-8.5.3-sdk`
-- Project folder: `/mnt/Y-Disk/Ren'Py/renpy-8.5.3-sdk/RockPaperScissors/MARTIAN DREAM V3`
+- Ren'Py SDK root: the folder containing `renpy.sh` (Linux/macOS) or `renpy.exe` (Windows).
+- Project folder: `RockPaperScissors/MARTIAN DREAM V3` inside the SDK root, or wherever you opened the project from.
 - Ren'Py: `8.5.3.26051504`; virtual resolution **1280×720**.
 - Run everything from the SDK root:
 
 ```sh
-cd /mnt/Y-Disk/Ren'Py/renpy-8.5.3-sdk
+cd "/path/to/renpy-sdk"
 
 # Validate script (must print statistics and no errors)
 ./renpy.sh "RockPaperScissors/MARTIAN DREAM V3" lint
@@ -56,6 +56,7 @@ Do not edit generated `*.rpyc`, `game/cache/`, `game/saves/`, or `game/tl/None/`
 | `game/options.rpy` | Project config (`config.name`, version 1.0, About text, `config.window = "auto"`, `has_voice = False`). |
 | `game/images/`, `game/audio/`, `game/fonts/` | Merged assets. Font: Vazirmatn. |
 | `README.md` | Public overview, controls, setup, structure, credits, license note. |
+| `LICENSE` | MIT license for the project; third-party components keep their own licenses. |
 | `Progress.md` | Changelog + current status. Update after every meaningful change. |
 | `agents.md` | This handoff/architecture/pitfalls document. |
 
@@ -160,9 +161,9 @@ Do **not** ship test `.rpy` files inside the real project. Test in a disposable
 copy:
 
 ```sh
-SDK=/mnt/Y-Disk/Ren'Py/renpy-8.5.3-sdk
+SDK="/path/to/renpy-sdk"
 SRC="$SDK/RockPaperScissors/MARTIAN DREAM V3"
-T=/tmp/opencode/vntest
+T="${TMPDIR:-/tmp}/martian-dream-v3-test"
 
 rm -rf "$T" && mkdir -p "$T"
 cp -a "$SRC/." "$T/"
@@ -197,7 +198,7 @@ Notes:
   the new screenshot with the old one and fails with
   `RenpyTestScreenshotError: ... pixel difference`.
 - The runner can stay alive after printing `PASSED` if the case has no `exit`.
-  Kill leftovers with `pkill -f "/tmp/opencode/vntest"` if needed.
+  Kill leftovers by process ID if needed.
 - Suites used for regression testing:
   - `ui::screens` — Dictionary, Preferences, About, Help, Load.
   - `scenes::solar_flare`, `scenes::sweep`, `scenes::antenna`,

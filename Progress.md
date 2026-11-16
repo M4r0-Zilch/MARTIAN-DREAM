@@ -12,7 +12,7 @@
 ## Quick verification (copy/paste from SDK root)
 
 ```sh
-cd /mnt/Y-Disk/Ren'Py/renpy-8.5.3-sdk
+cd "/path/to/renpy-sdk"
 ./renpy.sh "RockPaperScissors/MARTIAN DREAM V3" lint
 ./renpy.sh "RockPaperScissors/MARTIAN DREAM V3" compile
 ```
@@ -36,6 +36,18 @@ Arabic prototype.
 
 ### Final optimization and GitHub readiness (2026-11-16)
 
+- [x] Corrected the save/load menu overflow shown in the supplied screenshot.
+      The menu now constrains the content panel and save grid to the 1280×720
+      canvas, while keeping the 3-column desktop and 2-column small layouts.
+- [x] Re-ran Ren'Py 8.5.3 lint and compile after the save/load layout fix.
+      Lint reports the expected 160 dialogue blocks, 11 menus, 37 images, and
+      32 screens with no errors; compile exits successfully.
+- [x] Added the MIT license with the Team AG10S attribution and updated the
+      README to explain reuse terms and note that third-party licenses remain
+      applicable.
+- [x] Expanded the README with a story and gameplay overview, audience and
+      platform details, and credit for Team AG10S and the NASA Space Apps
+      Challenge Alexandria Local Event.
 - [x] Fitted the Dictionary inside the 1280×720 screen: panel reduced from
       1180×780 to 1120×660, viewport to 1040×430, and paddings/spacing tightened.
 - [x] Switched the Dictionary to English reading order: term on the left,
@@ -49,7 +61,7 @@ Arabic prototype.
 - [x] Expanded `.gitignore` for `codes.txt`, `runerr*.txt`, `runout*.txt`,
       `game/tl/None/`, `.vscode/`, and OS clutter.
 - [x] Added `README.md` with features, controls, setup, structure, test commands,
-      credits, and an honest license note.
+      credits, and the license note.
 - [x] Re-ran `lint`, `compile`, and all regression smoke tests after the edits.
 
 ### Character colors and sprite overlays
@@ -165,7 +177,7 @@ Arabic prototype.
 
 - `errors.txt`, `traceback.txt`, `log.txt`, `runerr*.txt`, and `runout*.txt` are
   historical run artifacts and are now ignored by git. They are safe to delete.
-- Test files/screenshots live in the disposable `/tmp/opencode/vntest` copy, not
+- Test files/screenshots live in a disposable copy outside the project, not
   in the shipped game. See `agents.md` §7 for the test workflow.
 - Character names use legacy aliases (`nut`/`n`/`nout`, `suhail`/`s`) that all
   display the current English names. Do not rename them without a full dialogue
@@ -177,8 +189,7 @@ Arabic prototype.
 ## Optional next steps
 
 1. Add a persistent, opt-in regression suite in the project (gated by
-   `config.developer`) so tests do not depend on `/tmp/opencode/vntest`.
-2. Choose and add a `LICENSE` file if the project will be distributed publicly.
-3. Add a short gameplay screenshot or GIF to the README for GitHub presentation.
-4. Delete stale root artifacts (`errors.txt`, `traceback.txt`, old `run*.txt`)
+   `config.developer`) so tests do not depend on a disposable copy.
+2. Add a short gameplay screenshot or GIF to the README for GitHub presentation.
+3. Delete stale root artifacts (`errors.txt`, `traceback.txt`, old `run*.txt`)
    when they are no longer useful.

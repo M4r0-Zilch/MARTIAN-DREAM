@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 ## Initialization
 ################################################################################
 
@@ -135,7 +135,7 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    background Transform("gui/textbox.png", xysize=(1280, 210), fit="fill", xalign=0.5, yalign=1.0)
 
 style namebox:
     xpos gui.name_xpos
@@ -158,7 +158,7 @@ style say_dialogue:
 
     xpos gui.dialogue_xpos
     xsize gui.dialogue_width
-    ypos gui.dialogue_ypos
+    ypos 58
 
     adjust_spacing False
 
@@ -219,7 +219,7 @@ style choice_button_text is button_text
 
 style choice_vbox:
     xalign 0.5
-    ypos 405
+    ypos 360
     yanchor 0.5
 
     spacing gui.choice_spacing
@@ -609,42 +609,46 @@ style return_button is navigation_button
 style return_button_text is navigation_button_text
 
 style game_menu_outer_frame:
-    bottom_padding 45
-    top_padding 180
+    bottom_padding 24
+    top_padding 118
 
     background "gui/overlay/game_menu.png"
 
 style game_menu_navigation_frame:
-    xsize 420
+    xsize 280
     yfill True
 
 style game_menu_content_frame:
-    left_margin 60
-    right_margin 30
-    top_margin 15
+    left_margin 30
+    right_margin 20
+    top_margin 10
+    yfill True
+    background Solid("#0b1220c4")
+    padding (18, 12)
+    xsize 920
 
 style game_menu_viewport:
-    xsize 1380
+    xsize 840
 
 style game_menu_vscrollbar:
     unscrollable gui.unscrollable
 
 style game_menu_side:
-    spacing 15
+    spacing 10
 
 style game_menu_label:
-    xpos 75
-    ysize 180
+    xpos 48
+    ysize 118
 
 style game_menu_label_text:
-    size 75
+    size 52
     color gui.accent_color
     yalign 0.5
 
 style return_button:
-    xpos gui.navigation_xpos
+    xpos 60
     yalign 1.0
-    yoffset -45
+    yoffset -22
 
 
 ## About screen ################################################################
@@ -681,6 +685,10 @@ style about_label is gui_label
 style about_label_text is gui_label_text
 style about_text is gui_text
 
+style about_text:
+    size 24
+    line_spacing 2
+
 style about_label_text:
     size gui.label_text_size
 
@@ -715,10 +723,9 @@ screen file_slots(title):
     use game_menu(title):
 
         fixed:
-
-            ## This ensures the input will get the enter event before any of the
-            ## buttons do.
             order_reverse True
+            xfill True
+            yfill True
 
             ## The page name, which can be edited by clicking on a button.
             button:
@@ -726,77 +733,90 @@ screen file_slots(title):
 
                 key_events True
                 xalign 0.5
+                ypos 0
                 action page_name_value.Toggle()
 
                 input:
                     style "page_label_text"
                     value page_name_value
 
-            ## The grid of file slots.
-            grid gui.file_slot_cols gui.file_slot_rows:
-                style_prefix "slot"
+            ## The grid of file slots. Its position is fixed inside the panel,
+            ## with the grid centered in the space reserved for it.
+            fixed:
+                xfill True
+                ypos 40
+                ysize 416
 
-                xalign 0.5
-                yalign 0.5
+                grid gui.file_slot_cols gui.file_slot_rows:
+                    style_prefix "slot"
 
-                spacing gui.slot_spacing
+                    xalign 0.5
+                    yalign 0.5
+                    xsize (gui.slot_button_width * gui.file_slot_cols + gui.slot_spacing * (gui.file_slot_cols - 1))
 
-                for i in range(gui.file_slot_cols * gui.file_slot_rows):
+                    spacing gui.slot_spacing
 
-                    $ slot = i + 1
+                    for i in range(gui.file_slot_cols * gui.file_slot_rows):
 
-                    button:
-                        action FileAction(slot)
+                        $ slot = i + 1
 
-                        has vbox
+                        button:
+                            action FileAction(slot)
 
-                        add FileScreenshot(slot) xalign 0.5
+                            has vbox
 
-                        text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
-                            style "slot_time_text"
+                            add FileScreenshot(slot, empty="images/ui/empty_slot.png") xalign 0.5
 
-                        text FileSaveName(slot):
-                            style "slot_name_text"
+                            text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
+                                style "slot_time_text"
 
-                        key "save_delete" action FileDelete(slot)
+                            text FileSaveName(slot):
+                                style "slot_name_text"
+
+                            key "save_delete" action FileDelete(slot)
 
             ## Buttons to access other pages.
-            vbox:
-                style_prefix "page"
+            fixed:
+                xfill True
+                ypos 458
+                ysize 80
 
-                xalign 0.5
-                yalign 1.0
+                vbox:
+                    style_prefix "page"
 
-                hbox:
                     xalign 0.5
+                    yalign 1.0
 
-                    spacing gui.page_spacing
+                    hbox:
+                        xalign 0.5
 
-                    textbutton _("<") action FilePagePrevious()
-                    key "save_page_prev" action FilePagePrevious()
+                        spacing gui.page_spacing
 
-                    if config.has_autosave:
-                        textbutton _("{#auto_page}A") action FilePage("auto")
+                        textbutton _("<") action FilePagePrevious()
+                        key "save_page_prev" action FilePagePrevious()
 
-                    if config.has_quicksave:
-                        textbutton _("{#quick_page}Q") action FilePage("quick")
+                        if config.has_autosave:
+                            textbutton _("{#auto_page}A") action FilePage("auto")
 
-                    ## range(1, 10) gives the numbers from 1 to 9.
-                    for page in range(1, 10):
-                        textbutton "[page]" action FilePage(page)
+                        if config.has_quicksave:
+                            textbutton _("{#quick_page}Q") action FilePage("quick")
 
-                    textbutton _(">") action FilePageNext()
-                    key "save_page_next" action FilePageNext()
+                        ## range(1, 10) gives the numbers from 1 to 9.
+                        for page in range(1, 10):
+                            textbutton "[page]" action FilePage(page)
 
-                if config.has_sync:
-                    if CurrentScreenName() == "save":
-                        textbutton _("Upload Sync"):
-                            action UploadSync()
-                            xalign 0.5
-                    else:
-                        textbutton _("Download Sync"):
-                            action DownloadSync()
-                            xalign 0.5
+                        textbutton _(">") action FilePageNext()
+                        key "save_page_next" action FilePageNext()
+
+                    if config.has_sync:
+                        if CurrentScreenName() == "save":
+                            textbutton _("Upload Sync"):
+                                action UploadSync()
+                                xalign 0.5
+                        else:
+                            textbutton _("Download Sync"):
+                                action DownloadSync()
+                                xalign 0.5
 
 
 style page_label is gui_label
@@ -810,11 +830,12 @@ style slot_time_text is slot_button_text
 style slot_name_text is slot_button_text
 
 style page_label:
-    xpadding 75
-    ypadding 5
+    xpadding 30
+    ypadding 2
     xalign 0.5
 
 style page_label_text:
+    size 26
     textalign 0.5
     layout "subtitle"
     hover_color gui.hover_color
@@ -827,6 +848,8 @@ style page_button_text:
 
 style slot_button:
     properties gui.button_properties("slot_button")
+    background Frame("gui/button/slot_panel_idle.png", Borders(12, 12, 12, 12))
+    hover_background Frame("gui/button/slot_panel_hover.png", Borders(12, 12, 12, 12))
 
 style slot_button_text:
     properties gui.text_properties("slot_button")
@@ -846,9 +869,12 @@ screen preferences():
     use game_menu(_("Preferences"), scroll="viewport"):
 
         vbox:
+            xfill True
 
             hbox:
                 box_wrap True
+                spacing 48
+                xalign 0.5
 
                 if renpy.variant("pc") or renpy.variant("web"):
 
@@ -868,11 +894,13 @@ screen preferences():
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
 
-            null height (4 * gui.pref_spacing)
+            null height (2 * gui.pref_spacing)
 
             hbox:
                 style_prefix "slider"
                 box_wrap True
+                spacing 48
+                xalign 0.5
 
                 vbox:
 
@@ -948,13 +976,14 @@ style mute_all_button_text is check_button_text
 
 style pref_label:
     top_margin gui.pref_spacing
-    bottom_margin 3
+    bottom_margin 2
 
 style pref_label_text:
+    size 24
     yalign 1.0
 
 style pref_vbox:
-    xsize 338
+    xsize 260
 
 style radio_vbox:
     spacing gui.pref_button_spacing
@@ -977,18 +1006,18 @@ style check_button_text:
     properties gui.text_properties("check_button")
 
 style slider_slider:
-    xsize 525
+    xsize 320
 
 style slider_button:
     properties gui.button_properties("slider_button")
     yalign 0.5
-    left_margin 15
+    left_margin 10
 
 style slider_button_text:
     properties gui.text_properties("slider_button")
 
 style slider_vbox:
-    xsize 675
+    xsize 330
 
 
 ## History screen ##############################################################
@@ -1062,10 +1091,13 @@ style history_name:
     xsize gui.history_name_width
 
 style history_name_text:
+    size 24
     min_width gui.history_name_width
     textalign gui.history_name_xalign
 
 style history_text:
+    size 24
+    line_spacing 2
     xpos gui.history_text_xpos
     ypos gui.history_text_ypos
     xanchor gui.history_text_xalign
@@ -1098,7 +1130,7 @@ screen help():
         style_prefix "help"
 
         vbox:
-            spacing 23
+            spacing 14
 
             hbox:
 
@@ -1233,13 +1265,17 @@ style help_button_text:
     properties gui.text_properties("help_button")
 
 style help_label:
-    xsize 375
-    right_padding 30
+    xsize 210
+    right_padding 16
 
 style help_label_text:
-    size gui.text_size
+    size 23
     xalign 1.0
     textalign 1.0
+
+style help_text:
+    size 23
+    xmaximum 620
 
 
 
@@ -1271,7 +1307,7 @@ screen confirm(message, yes_action, no_action):
         vbox:
             xalign .5
             yalign .5
-            spacing 45
+            spacing 24
 
             label _(message):
                 style "confirm_prompt"
@@ -1279,7 +1315,7 @@ screen confirm(message, yes_action, no_action):
 
             hbox:
                 xalign 0.5
-                spacing 150
+                spacing 100
 
                 textbutton _("Yes") action yes_action
                 textbutton _("No") action no_action
@@ -1624,7 +1660,7 @@ define bubble.expand_area = {
 
 style pref_vbox:
     variant "medium"
-    xsize 675
+    xsize 280
 
 ## Since a mouse may not be present, we replace the quick menu with a version
 ## that uses fewer and bigger buttons that are easier to touch.
@@ -1671,15 +1707,16 @@ style game_menu_outer_frame:
 
 style game_menu_navigation_frame:
     variant "small"
-    xsize 510
+    xsize 260
 
 style game_menu_content_frame:
     variant "small"
     top_margin 0
+    xsize 900
 
 style game_menu_viewport:
     variant "small"
-    xsize 1305
+    xsize 840
 
 style pref_vbox:
     variant "small"

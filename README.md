@@ -1,8 +1,37 @@
 # MARTIAN DREAM V3
 
-A short, family-friendly Ren'Py visual novel about Suhail, a boy who dreams of running a Mars colony — and wakes up with a better understanding of the real science behind space weather.
+**MARTIAN DREAM V3** is a family-friendly science adventure about a young
+student whose dream of reaching Mars turns into an unexpected mission to help
+protect a colony. The story introduces space weather and the challenges of
+living on Mars through dialogue, choices, and short interactive games.
 
-The game is fully in English and is designed to be readable by ages 7–11 and enjoyable for older players too.
+Created by **Team AG10S** for the **NASA Space Apps Challenge Alexandria Local
+Event**. The project is an independent event submission and is not an official
+NASA product or endorsement.
+
+The game is in English, designed to be approachable for readers ages 7–11, and
+made to be enjoyable for older players too. It runs on desktop with keyboard
+and mouse controls.
+
+## The game
+
+Suhail is researching whether people could live on Mars when he falls asleep
+and wakes aboard a spacecraft. With the ship and colony facing dangerous space
+weather, he must help Nout respond to a solar flare and a planet-wide dust
+storm. The choices you make shape the colony's outcome.
+
+Along the way, players can:
+
+- Navigate a solar-flare challenge, avoiding radiation and using a timed shield.
+- Help the colony through dust-storm tasks, including cleaning solar panels and
+  repairing a communications antenna.
+- Answer a short Mars science quiz and earn a mission certificate.
+- Explore the Astronaut's Dictionary for friendly explanations of Mars and
+  space-weather terms.
+
+There are four possible endings. The game uses original story, art, and sound
+assets, with a calm 1280×720 interface. No account, network connection, or
+additional download is needed to play once Ren'Py is installed.
 
 ## Features
 
@@ -62,6 +91,8 @@ The dialogue box is hidden during minigames so the play area stays clear. The qu
 │   └── gui/                # Ren'Py GUI images
 ├── Progress.md             # Development log and verification notes
 ├── agents.md               # Handoff guide for future contributors/AI agents
+├── LICENSE                 # MIT License for the project
+├── .gitignore              # Excludes saves, caches, compiled scripts, and logs
 └── project.json            # Ren'Py project metadata
 ```
 
@@ -88,10 +119,19 @@ The UI, both minigames, all four endings, and the certificate flow have been smo
 ## Credits
 
 - **Engine:** [Ren'Py](https://www.renpy.org/) 8.5.3.
-- **Story, code, and game design:** the MARTIAN DREAM V3 project author.
+- **Created for:** NASA Space Apps Challenge Alexandria Local Event.
+- **Team:** AG10S.
+- **Story, code, and game design:** Team AG10S.
 - **Font:** Vazirmatn, bundled under the SIL Open Font License.
 - **Art and audio:** created for this project unless otherwise noted.
 
 ## License
 
-No public license has been chosen for this repository yet. The source and original assets are shared for viewing and educational purposes; please contact the author before redistributing or reusing them commercially. Ren'Py itself remains under its own license.
+This project is licensed under the [MIT License](LICENSE). You may use,
+modify, and redistribute it, including commercially, provided you retain the
+copyright and permission notice.
+
+The copyright attribution credits Team AG10S. Third-party components retain
+their own licenses; for example,
+the bundled Vazirmatn font is licensed under the SIL Open Font License, and
+Ren'Py is distributed under its own license.
